@@ -1,4 +1,4 @@
-# ESP32-S3 OTA Web Flasher
+# ESP32 OTA Web Flasher
 
 Progetto completo per **ESP32-S3** composto da:
 1. **Firmware base PlatformIO / Arduino** con Access Point Wi-Fi (`ESP-Setup`), supporto **mDNS** (`esp-setup.local`), tabella partizioni **Dual-OTA** (`default_8MB.csv`) e Web Server HTTP integrato per aggiornamenti firmware **Over-The-Air (OTA)** tramite file `.bin`.
