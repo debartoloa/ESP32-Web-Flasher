@@ -2,6 +2,13 @@
 
 Tutte le modifiche rilevanti a questo progetto saranno documentate in questo file secondo il formato [Keep a Changelog](https://keepachangelog.com/it/1.1.0/) e il [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.2.1] - 2026-11-26
+
+### Changed
+- Aggiornata la tabella partizioni di `esp32` (ESP32 Classic) ed `esp32c3` (ESP32-C3) a `min_spiffs.csv` (Dual OTA 1.9MB per slot `0x1E0000` + FS `0x20000`) per evitare errori `Not Enough Space` negli aggiornamenti OTA Wi-Fi successivi.
+- Mantenuto invariato `partitions.bin` per `esp32s3`.
+- Aggiunta nella UI (Step 2 e pannello Componenti Flashati) la nota riepilogativa dello schema partizioni e degli offset esatti applicati al chip selezionato.
+
 ## [1.2.0] - 2026-11-18
 
 ### Added

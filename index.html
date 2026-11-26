@@ -18,7 +18,7 @@
       </div>
       <div class="badges">
         <span class="badge badge-primary">ESP32 / S3 / C3 / S2</span>
-        <span class="badge badge-neutral">v1.2.0</span>
+        <span class="badge badge-neutral">v1.2.1</span>
         <span class="badge" id="serial-badge">Verifica Web Serial...</span>
       </div>
       <h1>ESP32 OTA Web Flasher</h1>
@@ -112,6 +112,10 @@
             <input type="checkbox" id="chk-include-base-parts" checked>
             <span>Aggiungi automaticamente <code>bootloader.bin</code>, <code>partitions.bin</code> e <code>boot_app0.bin</code> per primo flash (offset <code>0x10000</code>)</span>
           </label>
+          <div class="layout-note" id="partition-layout-note">
+            <strong id="layout-note-title">Layout partizioni applicato:</strong>
+            <span id="layout-note-detail"></span>
+          </div>
         </div>
 
         <div class="step-footer">

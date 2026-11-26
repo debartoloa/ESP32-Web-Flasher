@@ -5,24 +5,28 @@ const FAMILIES = {
     label: "ESP32 Classico",
     bootloaderAddress: 0x1000,
     bootloaderHex: "0x1000",
+    partitionLabel: "Layout 4MB (min_spiffs): Dual OTA 1.9MB + FS",
     dir: "./firmware/esp32",
   },
   esp32s3: {
     label: "ESP32-S3",
     bootloaderAddress: 0x0000,
     bootloaderHex: "0x0000",
+    partitionLabel: "Layout 8MB/16MB Dual OTA",
     dir: "./firmware/esp32s3",
   },
   esp32c3: {
     label: "ESP32-C3",
     bootloaderAddress: 0x0000,
     bootloaderHex: "0x0000",
+    partitionLabel: "Layout 4MB (min_spiffs): Dual OTA 1.9MB + FS",
     dir: "./firmware/esp32c3",
   },
   esp32s2: {
     label: "ESP32-S2",
     bootloaderAddress: 0x1000,
     bootloaderHex: "0x1000",
+    partitionLabel: "Layout 4MB (default): Dual OTA 1.28MB",
     dir: "./firmware/esp32s2",
   },
 };
@@ -56,6 +60,9 @@ const el = {
   customBinInput: document.getElementById("custom-bin-input"),
   customFileLabel: document.getElementById("custom-file-label"),
   chkIncludeBaseParts: document.getElementById("chk-include-base-parts"),
+  partitionLayoutNote: document.getElementById("partition-layout-note"),
+  layoutNoteTitle: document.getElementById("layout-note-title"),
+  layoutNoteDetail: document.getElementById("layout-note-detail"),
   chkEraseAll: document.getElementById("chk-erase-all"),
   btnFlash: document.getElementById("btn-flash"),
   progressArea: document.getElementById("progress-area"),
@@ -102,17 +109,26 @@ function updatePartsPreview() {
   const fam = FAMILIES[state.family];
   el.targetFamilyLabel.textContent = fam.label;
 
+  if (el.partitionLayoutNote) {
+    const showNote = el.chkIncludeBaseParts.checked;
+    el.partitionLayoutNote.hidden = !showNote;
+    if (showNote) {
+      el.layoutNoteTitle.textContent = `${fam.label} — ${fam.partitionLabel}`;
+      el.layoutNoteDetail.textContent = `Offset: Bootloader ${fam.bootloaderHex} · Partitions 0x8000 · boot_app0 0xE000 · App 0x10000`;
+    }
+  }
+
   const rows = [];
   if (state.fwMode === "base") {
     rows.push([fam.bootloaderHex, `${state.family}/bootloader.bin (auto)`]);
-    rows.push(["0x8000", `${state.family}/partitions.bin (auto, Dual-OTA)`]);
+    rows.push(["0x8000", `${state.family}/partitions.bin (${fam.partitionLabel})`]);
     rows.push(["0xE000", `${state.family}/boot_app0.bin (auto)`]);
     rows.push(["0x10000", `${state.family}/firmware.bin (Base OTA)`]);
   } else {
     const fileName = state.customFile ? state.customFile.name : "Seleziona file .bin...";
     if (el.chkIncludeBaseParts.checked) {
       rows.push([fam.bootloaderHex, `${state.family}/bootloader.bin (auto)`]);
-      rows.push(["0x8000", `${state.family}/partitions.bin (auto, Dual-OTA)`]);
+      rows.push(["0x8000", `${state.family}/partitions.bin (${fam.partitionLabel})`]);
       rows.push(["0xE000", `${state.family}/boot_app0.bin (auto)`]);
       rows.push(["0x10000", `${fileName} (tuo firmware)`]);
     } else {
